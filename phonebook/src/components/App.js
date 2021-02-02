@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
-import Form from './components/Form'
-import Person from './components/Person'
-import Search from './components/Search'
-import People from './components/People'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Form from './Form'
+import Person from './Person'
+import Search from './Search'
+import People from './People'
+
+
 
 
 
@@ -10,12 +13,23 @@ import People from './components/People'
 
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' , number:'867-5309' }
-  ]) 
+  const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newSearch, setNewSearch] = useState('')
+
+  useEffect(() => {
+    
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+        
+  })
+  }, [])
+ 
+
+
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -51,6 +65,7 @@ const App = () => {
     
     setNewSearch(event.target.value)
   }
+  
   const personsToShow = persons.filter(person => person.name.includes(newSearch) === true)
     
   
