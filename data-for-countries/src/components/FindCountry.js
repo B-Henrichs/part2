@@ -5,7 +5,7 @@ import React from 'react';
 const FindCountry = ({country, setCountry}) => {
     return (
         <div>
-            <label htmlFor='find-country'>Find countries: </label>
+            find countries
             <input  value={country} 
                 onChange={event => setCountry(event.target.value)}
             />

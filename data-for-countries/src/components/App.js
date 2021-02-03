@@ -4,10 +4,7 @@ import FindCountry from './FindCountry';
 import CountryList from './CountryList';
 
 const App = () => {
-  // List of all countries
   const [countries, setCountries] = useState([]);
-
-  // Country to be found
   const [country, setCountry] = useState('');
 
   // Fetch countries from API
@@ -16,18 +13,10 @@ const App = () => {
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => setCountries(response.data));
   }, []);
-
   return (
     <div>
-      {
-        countries.length ?
-        <>
           <FindCountry country={country} setCountry={setCountry} />
-          { country && <CountryList country={country} countries={countries} setCountry={setCountry} /> }
-        </>
-        :
-        <p>Loading application...</p>
-      }
+          <CountryList country={country} countries={countries} setCountry={setCountry} />
     </div>
   );
 };

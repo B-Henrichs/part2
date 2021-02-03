@@ -7,7 +7,7 @@ const CountryList = ({country, countries, setCountry}) => {
 
     // Set search result to array with matching country names or empty array if no country is entered
     const searchResult = countries.filter(item => item.name.toLowerCase().includes(country.toLowerCase()));
-
+    
     return (
         <div>
             {
@@ -17,11 +17,11 @@ const CountryList = ({country, countries, setCountry}) => {
                 searchResult.length === 1 ?
                 <CountryDetails country={searchResult[0]} />
                 :
-                <ul style={{listStyle: 'none', padding: 0}}>
+                <ul>
                     {
                         searchResult.map(result => (
                             <li key={result.name}>
-                                {result.name} <button onClick={() => setCountry(result.name)}>Show</button>
+                                {result.name} <button onClick={()=>setCountry(result.name) }>show </button>
                             </li>
                         ))
                     }
