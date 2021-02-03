@@ -66,7 +66,7 @@ const App = () => {
     setNewSearch(event.target.value)
   }
   
-  const personsToShow = persons.filter(person => person.name.includes(newSearch) === true)
+  const personsToShow = persons.filter(person => person.name.toLowerCase().includes(newSearch) === true)
     
   
   return (
