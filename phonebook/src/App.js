@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Form from './Form'
-import Person from './Person'
-import Search from './Search'
-import People from './People'
+import Form from './components/Form'
+import Person from './components/Person'
+import Search from './components/Search'
+import People from './components/People'
 
 
 

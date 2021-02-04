@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import FindCountry from './FindCountry';
-import CountryList from './CountryList';
+import FindCountry from './components/FindCountry';
+import CountryList from './components/CountryList';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
