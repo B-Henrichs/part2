@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+
 import Form from './components/Form'
 import Person from './components/Person'
 import Search from './components/Search'
 import People from './components/People'
+import phoneService from './services/phoneBook'
 
 
 
@@ -20,10 +21,10 @@ const App = () => {
 
   useEffect(() => {
     
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+   phoneService
+      .getAll()
+      .then(initialBook => {
+        setPersons(initialBook)
         
   })
   }, [])
@@ -33,9 +34,6 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    
-    console.log('button clicked',persons)
-
     if (persons.some( person => person.name === newName)){
         window.alert(`${newName} is already in the phonebook`)
     return;}
@@ -44,10 +42,14 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     }
+    phoneService
+      .create(personObject)
+      .then( returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
     
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
   }
 
   const handleNameChange = (event) => {
@@ -65,6 +67,16 @@ const App = () => {
     
     setNewSearch(event.target.value)
   }
+
+  const removeEntry = (event) => {
+    event.preventDefault()
+   
+   console.log("click")
+   
+    
+    
+    
+  }
   
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(newSearch) === true)
     
@@ -76,7 +88,7 @@ const App = () => {
       <Search newSearch={newSearch} handleSearchChange={handleSearchChange} />
       <h3>Add a new Person</h3>
       <Form addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>
-      <People personsToShow={personsToShow} Person={Person}/>
+      <People personsToShow={personsToShow} Person={Person} removeEntry={removeEntry}/>
      
     </div>
     

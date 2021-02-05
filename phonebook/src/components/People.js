@@ -1,13 +1,14 @@
 import React from 'react'
 
-const People = (props) => {
+const People = ({Person, personsToShow, removeEntry}) => {
     return(
         
         <div>
             <h2>Numbers</h2>
+            
     <ul>
-          {props.personsToShow.map(person =>
-            <props.Person key={person.name} person={person}/>
+          {personsToShow.map(person =>
+            <Person key={person.name} person={person} removeEntry={removeEntry}/>    
             )}
       </ul>
       </div>
