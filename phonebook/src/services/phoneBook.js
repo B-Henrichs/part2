@@ -5,7 +5,7 @@ const getAll = () => {
   const request = axios.get(baseUrl)
   
   return request.then(response => response.data)
-  //return request.then(response => response.data)
+  
 }
 
 const create = newObject => {
@@ -19,10 +19,10 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-const removeEntry = (id) =>{
-  console.log("id is",id)
-  if (window.confirm(`Delete `)) {
-    return axios.delete(`${baseUrl}/${id}`)
+const removeEntry = (person) =>{
+  console.log("id is",person)
+  if (window.confirm(`are you sure?`)) {
+    return axios.delete(`${baseUrl}/${person}`)
     .then(response => response.data)
   }
 }

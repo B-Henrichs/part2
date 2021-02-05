@@ -40,7 +40,7 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      
     }
     phoneService
       .create(personObject)
@@ -70,15 +70,21 @@ const App = () => {
 
   const removeEntry = (event) => {
     event.preventDefault()
+   const id = parseInt(event.target.value)
+   console.log("click", id)
+    phoneService
+      .removeEntry(event.target.value)
+      .then( returnedObject => {
+        console.log("returned Obj",returnedObject)
+        setPersons(persons.filter(n => n.id !== id))
+      })
+      
+  
    
-   console.log("click")
-   
-    
-    
     
   }
   
-  const personsToShow = persons.filter(person => person.name.toLowerCase().includes(newSearch) === true)
+  const personsToShow =  persons.filter(person => person.name.toLowerCase().includes(newSearch) === true)
     
   
   return (
