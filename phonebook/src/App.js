@@ -34,44 +34,47 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    if (persons.some( person => person.name === newName)){
-        window.alert(`${newName} is already in the phonebook`)
-    return;}
+    
     const personObject = {
       name: newName,
       number: newNumber,
       
     }
-    phoneService
+   
+
+       phoneService
       .create(personObject)
       .then( returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
-      })
-    
+     
+    })
   }
 
-  const handleNameChange = (event) => {
-    console.log(event.target.value)
+
+
     
-    setNewName(event.target.value)
+    
+    
+  
+
+  const handleNameChange = (event) => {
+   setNewName(event.target.value)
   }
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
-    
-    setNewNumber(event.target.value)
+  setNewNumber(event.target.value)
   }
   const handleSearchChange = (event) => {
-    console.log(event.target.value)
-    
-    setNewSearch(event.target.value)
+  setNewSearch(event.target.value)
   }
 
   const removeEntry = (event) => {
     event.preventDefault()
    const id = parseInt(event.target.value)
-   console.log("click", id)
+   console.log("click", )
+   const confirm = window.confirm("are you sure?")
+   if (confirm){
     phoneService
       .removeEntry(event.target.value)
       .then( returnedObject => {
@@ -82,7 +85,7 @@ const App = () => {
   
    
     
-  }
+  }}
   
   const personsToShow =  persons.filter(person => person.name.toLowerCase().includes(newSearch) === true)
     

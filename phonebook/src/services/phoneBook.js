@@ -20,11 +20,9 @@ const update = (id, newObject) => {
 }
 
 const removeEntry = (person) =>{
-  console.log("id is",person)
-  if (window.confirm(`are you sure?`)) {
-    return axios.delete(`${baseUrl}/${person}`)
-    .then(response => response.data)
+  const request =axios.delete(`${baseUrl}/${person}`)
+    return request.then(response => response.data)
   }
-}
+
 
 export default { getAll, create, update, removeEntry }
