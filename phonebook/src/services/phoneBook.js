@@ -27,5 +27,8 @@ const removeEntry = (person) =>{
     return request.then(response => response.data)
   }
 
+const services = {
+  getAll, create, update, removeEntry
+}
 
-export default { getAll, create, update, removeEntry }
+export default services
