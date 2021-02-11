@@ -6,7 +6,7 @@ import Search from './components/Search'
 import People from './components/People'
 import phoneService from './services/phoneBook'
 import Notification from './components/Notification'
-
+import Error from './components/Error'
 
 
 
@@ -20,6 +20,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newSearch, setNewSearch] = useState('')
+  const [alertMessage, setAlertMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
   //use axios to get import db.json file requires json server to be run
@@ -46,17 +47,17 @@ const App = () => {
        phoneService
       .create(personObject)
       .then( returnedPerson => {
-        setErrorMessage(
+        setAlertMessage(
           `Added ${returnedPerson.name} to the server`
         )
         setTimeout(() => {
-          setErrorMessage(null)
+          setAlertMessage(null)
         }, 5000)
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('') 
     })
- 
+    
   }
 
 
@@ -81,11 +82,11 @@ const App = () => {
       phoneService
         .update(updatedPerson.id, updatedPerson)
         .then((response) => {
-          setErrorMessage(
+          setAlertMessage(
             `Updated ${updatedPerson.name}'s entry`
           )
           setTimeout(() => {
-            setErrorMessage(null)
+            setAlertMessage(null)
           }, 5000)
 
           //takes response from json server and alters state array, returns identical
@@ -94,7 +95,7 @@ const App = () => {
       })
       .catch(error => {
         setErrorMessage(
-          `'${updatedPerson.name}' was removed from the server`
+          `'${updatedPerson.name}' was removed by another user`
         )
         setTimeout(() => {
           setErrorMessage(null)
@@ -126,15 +127,24 @@ console.log("value" ,event.target.value)
     .removeEntry(event.target.value)
     .then( response => {
       console.log(persons[id-1].name)
-      setErrorMessage(
+      setAlertMessage(
         `Deleted ${persons[id-1].name}'s entry`
       )
       setTimeout(() => {
-        setErrorMessage(null)
+        setAlertMessage(null)
       }, 5000)
 
       //uses filter method on persons state array to return a new array without the removed entry
       setPersons(persons.filter(n => n.id !== id))
+    })
+    .catch(error => {
+      setErrorMessage(
+        `'${persons[id-1].name}' was removed by another user`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      setPersons(persons.filter(n => n.id !== persons[id-1].id))     
     })
 }}
 
@@ -192,7 +202,9 @@ console.log("value" ,event.target.value)
       //layout and call components
     <div>
       <h1>Phonebook</h1>
-      <Notification message={errorMessage} />
+      <Error message= {errorMessage}/>
+      <Notification message={alertMessage} />
+      
       <h3>Search</h3>
       <Search newSearch={newSearch} handleSearchChange={handleSearchChange} />
       <h3>Update Phonebook</h3>
